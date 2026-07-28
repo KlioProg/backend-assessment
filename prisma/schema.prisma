@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// 1. Defining your specific roles
+enum Role {
+  ADMIN
+  LANDLORD
+  TENANT
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  fullName  String
+  role      Role     @default(TENANT)
+  createdAt DateTime @default(now())
+
+  // "Has many properties (if Landlord), or Agreements (if Tenant)"
+  properties Property[]
+  agreements Agreement[]
+  concerns   Concern[] 
+}
+
+model Property {
+  id        String   @id @default(uuid())
+  name      String
+  address   String
+  createdAt DateTime @default(now())
+
+  // "Belongs to the Owner/Landlord"
+  landlordId String
+  landlord   User   @relation(fields: [landlordId], references: [id])
+  
+  // "Has many units"
+  units      Unit[]
+}
+
+model Unit {
+  id          String   @id @default(uuid())
+  unitNumber  String
+  status      String   @default("AVAILABLE") // Could be AVAILABLE, OCCUPIED, MAINTENANCE
+  createdAt   DateTime @default(now())
+
+  // "Belongs to a property"
+  propertyId  String
+  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  
+  // "Has many agreements"
+  agreements  Agreement[]
+  concerns    Concern[]
+}
+
+model Agreement {
+  id        String   @id @default(uuid())
+  startDate DateTime
+  endDate   DateTime
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  // "Links tenants to a Unit"
+  tenantId  String
+  tenant    User     @relation(fields: [tenantId], references: [id])
+  unitId    String
+  unit      Unit     @relation(fields: [unitId], references: [id])
+  
+  // "Has many payments"
+  payments  Payment[]
+}
+
+model Payment {
+  id          String   @id @default(uuid())
+  amount      Float
+  dueDate     DateTime
+  createdAt   DateTime @default(now())
+
+  // "Belongs to an Agreement"
+  agreementId String
+  agreement   Agreement @relation(fields: [agreementId], references: [id])
+}
+
+model Concern {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  status      String   @default("OPEN")
+  createdAt   DateTime @default(now())
+
+  // "Created by tenant, linked to a Unit"
+  tenantId    String
+  tenant      User     @relation(fields: [tenantId], references: [id])
+  unitId      String
+  unit        Unit     @relation(fields: [unitId], references: [id])
+}
