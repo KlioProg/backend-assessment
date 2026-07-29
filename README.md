@@ -35,10 +35,10 @@ This application follows a standard modular, layered architecture using NestJS:
 * **Concerns:** `POST /concerns`, `GET /concerns` ...
 
 ## 🚧 Known Limitations
-* [Write 1-2 things here, e.g., "Currently, there is no file upload for lease agreements" or "Passwords cannot be reset via email yet."]
+* Currently, there is no file upload for lease agreements or Passwords cannot be reset via email yet.
 
 ## 🛠️ Improvements With More Time
-* [Write 1-2 things here, e.g., "I would add comprehensive Jest Unit Tests for all services", "I would add Swagger for interactive API documentation", or "I would create a global exception filter to catch specific Prisma database errors."]
+* I would add comprehensive Jest Unit Tests for all services", I would add Swagger for interactive API documentation and I would also create a global exception filter to catch specific Prisma database errors.
 
 ## 🤖 AI Usage
 * **AI Tools Used:** Google Gemini
