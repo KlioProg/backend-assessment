@@ -39,6 +39,7 @@ This application follows a standard modular, layered architecture using NestJS:
 
 ## 🛠️ Improvements With More Time
 * I would add comprehensive Jest Unit Tests for all services", I would add Swagger for interactive API documentation and I would also create a global exception filter to catch specific Prisma database errors.
+* Containerization: With more time, I would Dockerize the application by writing a Dockerfile for the NestJS API and a docker-compose.yml file to spin up both the API and the PostgreSQL database together in isolated containers for easier deployment.
 
 ## 🤖 AI Usage
 * **AI Tools Used:** Google Gemini
